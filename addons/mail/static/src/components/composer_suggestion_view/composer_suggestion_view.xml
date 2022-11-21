@@ -13,10 +13,23 @@
                 <em class="o_ComposerSuggestionView_part2 text-600 text-truncate" t-esc="suggestable.channelCommand.help"/>
             </t>
             <t t-if="suggestable.partner">
-                <PersonaImStatusIconView t-if="personaImStatusIconView"
-                    className="'o_ComposerSuggestionView_personaImStatusIcon flex-shrink-0 me-1'"
-                    record="personaImStatusIconView"
-                />
+                <div class="o_MessageView_authorAvatarContainer o_MessageView_sidebarItem position-relative ">
+                 <img class="o_MessageView_authorAvatar w-100 h-100 rounded-circle o_object_fit_cover" t-att-class="{ 'cursor-pointer': hasAuthorOpenChat, o_redirect: hasAuthorOpenChat }" t-att-src="suggestable.partner.avatarUrl" t-att-role="hasAuthorOpenChat ? 'button' : ''" t-att-tabindex="hasAuthorOpenChat ? '0' : ''" t-on-click="onClickAuthorAvatar" t-att-title="authorTitleText" t-att-alt="authorTitleText"/>
+                         <t t-if="hasBackground">
+			                <i class="o_PersonaImStatusIconView_outerBackground fa fa-circle fa-stack-1x" />
+			                <i class="o_PersonaImStatusIconView_innerBackground fa fa-circle fa-stack-1x" />
+			            </t>
+                        <PersonaImStatusIconView t-if="personaImStatusIconView" 
+                            className="'o_MessageView_personaImStatusIcon position-absolute bottom-0 end-0 d-flex align-items-center justify-content-center text-white '"
+                            classNameObj="{
+                                'o-message-selected': isSelected,
+                                'o_MessageView_personaImStatusIcon-mobile': messaging.device.isSmall,
+                                'small': !messaging.device.isSmall,
+                                'text-100': suggestable.is_note and !isSelected,
+                            }"
+                            record="personaImStatusIconView"
+                        />
+                   </div>
                 <strong class="o_ComposerSuggestionView_part1 flex-shrink-0 mw-100 pe-2 text-truncate" t-esc="suggestable.partner.nameOrDisplayName"/>
                 <em t-if="suggestable.partner.email" class="o_ComposerSuggestionView_part2 text-600 text-truncate">(<t t-esc="suggestable.partner.email"/>)</em>
             </t>
